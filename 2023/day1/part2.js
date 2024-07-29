@@ -1,49 +1,57 @@
-const fs = require('fs')
-const readline = require('readline')
+const fs = require('fs');
+const readline = require('readline');
 
-const path = './input.txt'
-const fileStream = fs.createReadStream(path)
-const digits = ['one','two','three','four','five','six','seven','eight','nine']
-let sum = 0
+const path = './input.txt';
+const fileStream = fs.createReadStream(path);
 
 const rl = readline.createInterface({
     input: fileStream,
     crlfDelay: Infinity
-})
+});
+
+const numberWords = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+const wordToDigit = { zero: '0', one: '1', two: '2', three: '3', four: '4', five: '5', six: '6', seven: '7', eight: '8', nine: '9' };
+
+let sum = 0
 
 rl.on('line', line => {
-    let first, last
+    let first = null, last = null;
 
-    for (let i in digits) {
-        if (line.includes(digits[i])) {
-            console.log(line.includes(digits[i]), line, digits[i])
+    for (let i = 0; i < line.length; i++) {
+        if (/[0-9]/.test(line[i])) {
+            if (!first) {
+                first = line[i];
+            }
+            last = line[i];
+        }
+
+        for (let word of numberWords) {
+            if (line.slice(i, i + word.length).toLowerCase() === word) {
+                if (!first) {
+                    first = wordToDigit[word];
+                }
+                last = wordToDigit[word];
+            }
         }
     }
 
-    for (let x in line) {
-       //if (/[0-9]/.test(line[x])) {
-       //    if (!first) {
-       //        first = line[x]
-       //    }
-       //    else {
-       //        last = line[x]
-       //    }
-       //}        
+    if (!last) {
+        last = first;
     }
 
-    //if (!last) {
-    //    last = first
-    //}
+    console.log(`first ${first}, last ${last}`);
 
-    //const two_digit_num = first + last
+    if (first && last) {
+        const two_digit_num = first + last;
+        sum += Number(two_digit_num);
+        console.log(`line: ${line}, num: ${two_digit_num}, sum: ${sum}`);
+    }
+    else {
+        console.log(`line: ${line}, num: ${null}, sum: ${sum}`);
+    }
 
-    //if (two_digit_num) {
-    //    sum += Number(two_digit_num)
-    //}
-
-    //console.log(`line: ${line}, num: ${two_digit_num}, sum: ${sum}`)
 })
 
 rl.on('close', () => {
-    //console.log(`sum: ${sum}`)
+    console.log(`Total sum: ${sum}`);
 })
