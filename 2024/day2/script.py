@@ -7,24 +7,22 @@ with open(FILE, 'r') as file:
         line = list(map(int, line.strip().split(' ')))
         condition1 = True
         condition2 = True
-        problemDampener = False
+        dampener = False
         i = 0
-
-        print(line)
 
         while i < len(line) - 1:
             if not line[0] == line[1]:
                 INC = line[0] < line[1]
             else:
                 line.pop(0)
-                problemDampener = True
+                dampener = True
                 INC = line[0] < line[1]
 
             # Check first condition
             if INC and line[i] >= line[i+1] or not INC and line[i] <= line[i+1]:
-                if not problemDampener:
+                if not dampener:
                     line.pop(i+1)
-                    problemDampener = True
+                    dampener = True
                     i = 0
                     INC = line[0] < line[1]
                     continue
@@ -34,9 +32,9 @@ with open(FILE, 'r') as file:
 
             # Check second condition
             if abs(line[i]-line[i+1]) > 3:
-                if not problemDampener:
+                if not dampener:
                     line.pop(i+1)
-                    problemDampener = True
+                    dampener = True
                     i = 0
                     continue
                 else:
@@ -46,7 +44,8 @@ with open(FILE, 'r') as file:
             i += 1
         
         if condition1 and condition2:
-            print(True)
             count += 1
+        else:
+            print(line)
 
     print(count)
