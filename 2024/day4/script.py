@@ -32,7 +32,4 @@ for col in range(len(matrix)):
             if word == 'XMAS' or word[::-1] == 'XMAS':
                 count += 1
 
-        # check horizontal for last 3 columns
-        
-
 print(count)
