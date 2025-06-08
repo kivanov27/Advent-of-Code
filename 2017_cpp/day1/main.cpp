@@ -13,15 +13,15 @@ int main() {
 
         int sum = 0;
 
-        for (int i = 0; i < size; ++i) {
-            if (i + 1 == size) {
+        for (int i = 0; i < size - 1; ++i) {
+            if (i + 2 == size) {
                 if (input[i] == input[0]) {
-                    sum += input[i];
+                    sum += input[i] - '0';
                 }
             }
             else {
                 if (input[i] == input[i+1]) {
-                    sum += input[i];
+                    sum += input[i] - '0';
                 }
             }
         }
