@@ -1,5 +1,5 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 
 int main() {
     std::ifstream inputFile("input.txt");
@@ -14,15 +14,13 @@ int main() {
         int sum = 0;
 
         for (int i = 0; i < size - 1; ++i) {
-            if (i + 2 == size) {
-                if (input[i] == input[0]) {
-                    sum += input[i] - '0';
-                }
-            }
-            else {
-                if (input[i] == input[i+1]) {
-                    sum += input[i] - '0';
-                }
+            int j = (i + ((size - 1) / 2)) % size;
+            std::cout << "i: " << i << "   input[i]: " << input[i] << '\n';
+            std::cout << "j: " << j << "   input[j]: " << input[j] << '\n';
+            if (input[i] == input[j]) {
+                std::cout << "Add i: " << input[i] << '\n';
+                sum += input[i] - '0';
+                std::cout << "Sum: " << sum << '\n';
             }
         }
 
