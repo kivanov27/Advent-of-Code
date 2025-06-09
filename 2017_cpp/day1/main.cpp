@@ -7,8 +7,6 @@ int main() {
         inputFile.seekg(0, std::ios::end);
         int size = (int)inputFile.tellg() - 1;
 
-        std::cout << "Size: " << size << '\n';
-
         inputFile.seekg(0);
         char* input = new char[size + 1];
         inputFile.read(input, size);
@@ -17,12 +15,8 @@ int main() {
 
         for (int i = 0; i < size; ++i) {
             int j = (i + (size / 2)) % size;
-            // std::cout << "i: " << i << "   input[i]: " << input[i] << '\n';
-            // std::cout << "j: " << j << "   input[j]: " << input[j] << '\n';
             if (input[i] == input[j]) {
-                // std::cout << "Add i: " << input[i] << '\n';
                 sum += input[i] - '0';
-                // std::cout << "Sum: " << sum << '\n';
             }
         }
 
