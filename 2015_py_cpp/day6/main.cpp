@@ -5,7 +5,7 @@
 #include <string>
 
 int main() {
-    bool grid[1000][1000] = {};
+    int grid[1000][1000] = {};
     std::ifstream file("input.txt");
 
     if (file) {
@@ -15,27 +15,27 @@ int main() {
             char command[10];
             int x1, y1, x2, y2;
 
-            std::cout << line << '\n';
-
             if (sscanf(line.c_str(), "%9[^0-9] %d,%d %*s %d,%d", command, &x1, &y1, &x2, &y2) == 5) {
                 if (std::strcmp(command, "turn on ") == 0) {
                     for (int i = x1; i <= x2; ++i) {
                         for (int j = y1; j <= y2; ++j) {
-                            grid[i][j] = 1;
+                            grid[i][j]++;
                         }
                     }
                 }
                 else if (std::strcmp(command, "turn off ") == 0) {
                     for (int i = x1; i <= x2; ++i) {
                         for (int j = y1; j <= y2; ++j) {
-                            grid[i][j] = 0;
+                            if (grid[i][j] > 0) {
+                                grid[i][j]--;
+                            }
                         }
                     }
                 }
                 else if (std::strcmp(command, "toggle ") == 0) {
                     for (int i = x1; i <= x2; ++i) {
                         for (int j = y1; j <= y2; ++j) {
-                            grid[i][j] = !grid[i][j];
+                            grid[i][j] += 2;
                         }
                     }
                 }
@@ -46,15 +46,15 @@ int main() {
         std::cerr << "Failed to open input file" << '\n';
     }
 
-    int count = 0;
+    int sum = 0;
 
     for (int i = 0; i < 1000; ++i) {
         for (int j = 0; j < 1000; ++j) {
-            if (grid[i][j]) count++;
+            sum += grid[i][j];
         }
     }
 
-    std::cout << count << '\n';
+    std::cout << sum << '\n';
 
     file.close();
 
