@@ -8,30 +8,51 @@ int main() {
 
     if (inputFile.is_open()) {
         std::string range;
-        int total = 0;
+        long long total = 0;
 
         while (std::getline(inputFile, range, ',')) {
             std::istringstream iss(range);
-            int num1, num2;
+            long long num1, num2;
             char dash;
 
             if (iss >> num1 >> dash >> num2 && dash == '-') {
-                for (int i = num1; i <= num2; ++i) {
-                    const std::string numStr = std::to_string(i);
 
-                    if (numStr[0] == '0') {
-                        std::cout << numStr << '\n';
-                        total += i;
+                for (long long i = num1; i <= num2; ++i) {
+                    const std::string numStr = std::to_string(i);
+                    const unsigned length = numStr.length();
+                    // std::cout << "Number: " << numStr << " | Number length: " << length << '\n';
+
+                    for (int j = 1; j <= length / 2; ++j) {
+                        const std::string seq = numStr.substr(0, j);
+                        const int seqLength = seq.length();
+                        bool invalid = true;
+                        // std::cout << "Sequence: " << seq << " | Sequence length: " << seqLength << '\n';
+
+                        for (int k = j; k <= length - seqLength; k += seqLength) {
+                            if (length % seqLength != 0) {
+                                invalid = false;
+                                break;
+                            }
+
+                            // std::cout << "Comparing " << seq << " and " << numStr.substr(k, seqLength) << '\n';
+                            if (seq != numStr.substr(k, seqLength)) {
+                                invalid = false;
+                                // std::cout << "invalidating" << '\n';
+                                break;
+                            }
+                        }
+
+                        if (invalid) {
+                            // std::cout << i << '\n';
+                            total += i;
+                            break;
+                        }
                     }
-                    if (numStr.length() % 2 == 0 && numStr.substr(0, numStr.length() / 2) == numStr.substr(numStr.length() / 2)) {
-                        std::cout << numStr << '\n';
-                        total += i;
-                    }
+                    // std::cout << '\n';
                 }
             }
         }
-
-        std::cout << '\n' << "Total: " << total << '\n';
+        std::cout << "Total: " << total << '\n';
     }
 
     return 0;
