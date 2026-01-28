@@ -1,6 +1,6 @@
 def main():
     arr = []
-    accessible = 0
+    totalAccessible = 0;
 
     with open("input.txt", "r") as file:
         for line in file:
@@ -16,33 +16,40 @@ def main():
         rows = len(arr)
         cols = len(arr[0])
 
-        for r in range(rows):
-            for c in range(cols):
-                adjacent = 0;
+        while (True):
+            accessible = 0
 
-                # print(f"ARR[r][c] = ARR[{r}][{c}]")
-                if (arr[r][c] == "."): continue
+            for r in range(rows):
+                for c in range(cols):
+                    adjacent = 0;
 
-                for i in range(r-1, r+2):
-                    if (i < 0 or i >= rows): continue
+                    # print(f"ARR[r][c] = ARR[{r}][{c}]")
+                    if (arr[r][c] == "."): continue
 
-                    for j in range(c-1, c+2):
-                        if (j < 0 or j >= cols): continue
-                        elif (i == r and j == c): continue
-                        else:
-                            # print(f"arr[{i}][{j}] = {arr[i][j]}")
-                            if (arr[i][j] == '@'):
-                                adjacent += 1
-                                # print(f"adjacent = {adjacent}")
-                            # else:
-                                # print("skip")
+                    for i in range(r-1, r+2):
+                        if (i < 0 or i >= rows): continue
 
-                if (adjacent < 4):
-                    accessible += 1
-                    # print(f"adding to accessible, {accessible}")
-                # print("")
+                        for j in range(c-1, c+2):
+                            if (j < 0 or j >= cols): continue
+                            elif (i == r and j == c): continue
+                            else:
+                                # print(f"arr[{i}][{j}] = {arr[i][j]}")
+                                if (arr[i][j] == '@'):
+                                    adjacent += 1
+                                    # print(f"adjacent = {adjacent}")
+                                # else:
+                                    # print("skip")
 
-    print("Accessible: ", accessible)
+                    if (adjacent < 4):
+                        accessible += 1
+                        arr[r][c] = '.'
+                    #     print(f"adding to accessible, {accessible}")
+                    # print("")
+
+            if (accessible == 0): break
+            totalAccessible += accessible
+
+    print("totalAccessible: ", totalAccessible)
 
 
 if __name__ == "__main__":
