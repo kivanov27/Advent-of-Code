@@ -14,7 +14,7 @@ ranges.sort()
 merged = []
 
 for start, end in ranges:
-    if not merged or start > merged[-1][1]:
+    if not merged or start > merged[-1][1] + 1:
         merged.append([start, end])
     else:
         merged[-1][1] = max(end, merged[-1][1])
